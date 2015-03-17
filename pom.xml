@@ -3,10 +3,22 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.hello</groupId>
-    <artifactId>Sample-maven-android</artifactId>
-    <version>0.2.0</version>
+    <artifactId>gs-maven-android</artifactId>
+    <version>0.2.2</version>
     <packaging>apk</packaging>
 
+<!--	<distributionManagement>
+  <repository>
+     <id>deployment</id>
+     <name>Android-Maven-Sample</name>
+     <url>https://rink.hockeyapp.net/manage/apps/152245</url>
+  </repository>
+  <snapshotRepository>
+     <id>deployment</id>
+     <name>Android-Maven-Sample</name>
+     <url>https://rink.hockeyapp.net/manage/apps/152245</url>
+  </snapshotRepository>
+</distributionManagement> -->
     <properties>
         <!-- use UTF-8 for everything -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,27 +26,58 @@
     </properties>
 
     <dependencies>
+	<dependency>
+    <groupId>de.lgohlke.mojo</groupId>
+    <artifactId>versions-maven-plugin-report</artifactId>
+    <version>2.1.4</version>
+</dependency>
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
             <version>4.1.1.4</version>
             <scope>provided</scope>
         </dependency>
+		
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.3</version>
         </dependency>
+	<!--	<dependency>
+	<groupId>org.sonatype.nexus</groupId>
+	<artifactId>nexus-configuration</artifactId>
+	<version>2.3.1-01</version>
+</dependency> -->
+
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
+		<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>autoincrement-versions-maven-plugin</artifactId>
+        <version>2.0-SNAPSHOT</version>
+        <executions>
+                <execution>
+                        <id>update-pom-versions</id>
+                        <goals>
+                                <goal>increment</goal>
+                                <goal>commit</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                                <autoIncrementVersion>true</autoIncrementVersion>
+                        </configuration>
+                </execution>
+        </executions>
+</plugin>
+		
+		<plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-			
+                                                
                 <version>4.0.0-rc.2</version>
-				 <executions>
+                                                                <executions>
                 <execution>
                     <id>lint</id>
                     <goals>
@@ -48,11 +91,25 @@
                     <sdk>
                         <platform>21</platform>
                     </sdk>
-					<lint>
+                                                                                <lint>
                     <skip>false</skip>
                     <failOnError>false</failOnError>
                 </lint> 
 
+                    <deleteConflictingFiles>true</deleteConflictingFiles>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                </configuration>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>4.0.0-rc.2</version>
+                <configuration>
+                    <sdk>
+                        <platform>21</platform>
+                    </sdk>
                     <deleteConflictingFiles>true</deleteConflictingFiles>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
                 </configuration>
@@ -65,13 +122,8 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>			
-			<plugin>
-			<artifactId>sonar-maven3-plugin</artifactId>
-			<version>5.1-RC1</version>
-			</plugin>
+            </plugin>
         </plugins>
     </build>
 
 </project>
-
