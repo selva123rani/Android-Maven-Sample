@@ -91,7 +91,7 @@
                     <sdk>
                         <platform>21</platform>
                     </sdk>
-                                                                                <lint>
+                                                                               <lint>
                     <skip>false</skip>
                     <failOnError>false</failOnError>
                 </lint> 
