@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.hello</groupId>
     <artifactId>gs-maven-android</artifactId>
-    <version>0.2.${bamboo.buildNumber}-SNAPSHOT</version>
+    <version>0.2.${bambooBuildNumber}-SNAPSHOT</version>
     <packaging>apk</packaging>
 
 <!--	<distributionManagement>
